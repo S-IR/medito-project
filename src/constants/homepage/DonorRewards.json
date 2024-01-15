@@ -1,0 +1,42 @@
+{
+  "tiers": [
+    {
+      "value": 5,
+      "currencySymbol": "$",
+      "rewards": [
+        "Access to monthly newsletter",
+        "Invitation to community events"
+      ]
+    },
+    {
+      "value": 10,
+      "currencySymbol": "$",
+      "rewards": [
+        "Access to monthly newsletter",
+        "Invitation to community events",
+        "Free access to our webinars"
+      ]
+    },
+    {
+      "value": 15,
+      "currencySymbol": "$",
+      "rewards": [
+        "Access to monthly newsletter",
+        "Invitation to community events",
+        "Free access to our webinars",
+        "Quarterly one-on-one with our CEO"
+      ]
+    },
+    {
+      "value": 20,
+      "currencySymbol": "$",
+      "rewards": [
+        "Access to monthly newsletter",
+        "Invitation to community events",
+        "Free access to our webinars",
+        "Quarterly one-on-one with our CEO",
+        "something else"
+      ]
+    }
+  ]
+}
