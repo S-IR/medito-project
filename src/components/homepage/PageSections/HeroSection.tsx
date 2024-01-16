@@ -13,8 +13,6 @@ import ListOfDonors from '../ListOfDonors'
  * This section should appear at the top on the homepage ("/")
  */
 export default async function HeroSection() {
-
-
   const donorsQueryClient = new QueryClient()
 
   await donorsQueryClient.prefetchQuery({
@@ -22,20 +20,19 @@ export default async function HeroSection() {
     queryFn: getDonors,
   })
 
-
   return (
     <article className="relative w-full py-[15vh] lg:py-[4vh] ">
-      <div className="mb-12 animate-fadeIn lg:mb-8 flex w-full flex-col items-center justify-center space-y-12 lg:space-y-6 align-middle ">
-        <h1 className="w-full animate-fadeIn max-w-[350px] dark:text-cyan-200 text-center  font-handwriting text-5xl text-cyan-900   lg:max-w-[450px] lg:text-6xl  ">
+      <div className="mb-12 flex w-full animate-fadeIn flex-col items-center justify-center space-y-12 align-middle lg:mb-8 lg:space-y-6 ">
+        <h1 className="w-full max-w-[350px] animate-fadeIn text-center font-handwriting  text-5xl text-cyan-900 dark:text-cyan-200   lg:max-w-[450px] lg:text-6xl  ">
           {hydrationData.title}
         </h1>
-        <h2 className="max-w-[300px] text-center font-serif text-xl text-white font-thin lg:max-w-[550px] lg:font-light ">
+        <h2 className="max-w-[300px] text-center font-serif text-xl font-thin text-white lg:max-w-[550px] lg:font-light ">
           {hydrationData.subTitle}
         </h2>
       </div>
-        <DonationProgress />
-      <div className="mt-20 animate-fadeIn flex w-full flex-col items-center lg:items-baseline ">
-        <div className="w-[95vw] rounded-3xl bg-cyan-100 dark:bg-neutral-900 px-2 py-4 text-xl shadow-md dark:shadow-stone-950 shadow-stone-300 lg:ml-[2vw] lg:w-auto lg:max-w-[60vw]">
+      <DonationProgress />
+      <div className="mt-20 flex w-full animate-fadeIn flex-col items-center lg:items-baseline ">
+        <div className="w-[95vw] rounded-3xl bg-cyan-100 px-2 py-4 text-xl shadow-md shadow-stone-300 dark:bg-neutral-900 dark:shadow-stone-950 lg:ml-[2vw] lg:w-auto lg:max-w-[60vw]">
           <h3 className="p-2 font-serif">{hydrationData.description}</h3>
         </div>
       </div>

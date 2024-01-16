@@ -27,6 +27,13 @@ const DonationProgress = () => {
       setDonationMetadata(metadata)
     }
     fetchMetadata()
+
+    animationAPI.start({
+      to: {
+        progress: donationMetadata.gathered / donationMetadata.target,
+        opacity: 1,
+      },
+    })
   }, [])
 
   //then IF there are subsequent coming donations (I've used react query to be able to do this fetch in any component and use the same data) change the gathered amount
@@ -43,7 +50,7 @@ const DonationProgress = () => {
       !newDonorData.donation.amount
     )
       return
-      
+
     setDonationMetadata((oldMetadata) => {
       return {
         ...oldMetadata,
@@ -61,7 +68,7 @@ const DonationProgress = () => {
 
   //progress will be a value from 0 to value / max in the animation. Current value will just be a value from 0 to the actual number
   const [animationProps, animationAPI] = useSpring(() => ({
-    from : {
+    from: {
       progress: 0,
       opacity: 0, // Initial opacity
     },
@@ -76,13 +83,13 @@ const DonationProgress = () => {
       donationMetadata.target === 1
     )
       return
-      console.log('donationMetadata', donationMetadata);
+    console.log('donationMetadata', donationMetadata)
 
     animationAPI.start({
-     to: {
-      progress: donationMetadata.gathered / donationMetadata.target,
-      opacity: 1,
-     }
+      to: {
+        progress: donationMetadata.gathered / donationMetadata.target,
+        opacity: 1,
+      },
     })
   }, [donationMetadata])
 
