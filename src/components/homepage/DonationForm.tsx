@@ -104,7 +104,7 @@ export default function DonationForm() {
     <form
       id={'donation-form'}
       onSubmit={handleSubmit(onSubmit)}
-      className="flex w-full flex-col gap-y-6 rounded-3xl bg-teal-100 px-8 py-6  shadow-md shadow-stone-400 dark:bg-teal-900 dark:shadow-stone-950 lg:max-w-[600px]"
+      className="flex max-w-[90vw] w-full flex-col gap-y-6 rounded-3xl bg-teal-100 px-8 py-6  shadow-md shadow-stone-400 dark:bg-teal-900 dark:shadow-stone-950 lg:max-w-[600px]"
     >
       <p className="font-handwriting text-3xl font-light text-teal-950 dark:text-teal-200 lg:my-2 lg:w-full lg:text-center lg:text-5xl ">
         Begin Contributing
@@ -113,7 +113,7 @@ export default function DonationForm() {
         {possibleDurations.map((duration) => (
           <button
             type="button"
-            className={`w-full  rounded-md px-10 py-1 text-teal-900  shadow-md shadow-stone-400 hover:text-black dark:text-teal-200 dark:shadow-stone-950 ${currentInterval === duration.value ? `bg-cyan-200 dark:bg-cyan-800 hover:dark:bg-cyan-700` : `bg-white transition-all duration-300 dark:bg-teal-800 hover:dark:bg-teal-700 `} `}
+            className={`w-full  rounded-md px-4 text-xs lg:px-10 py-1 text-teal-900  shadow-md shadow-stone-400 hover:text-black dark:text-teal-200 dark:shadow-stone-950 ${currentInterval === duration.value ? `bg-cyan-200 dark:bg-cyan-800 hover:dark:bg-cyan-700` : `bg-white transition-all duration-300 dark:bg-teal-800 hover:dark:bg-teal-700 `} `}
             key={duration.value}
             onClick={() => setFormValue('interval', duration.value)}
           >
@@ -125,7 +125,7 @@ export default function DonationForm() {
         {possibleAmounts.map((amount) => (
           <button
             type="button"
-            className={`w-full rounded-md px-6 py-1 text-sm text-teal-900 shadow-md  shadow-stone-400 hover:text-black  dark:text-teal-200 dark:shadow-stone-950 ${chosenAmount === amount ? `bg-cyan-200 dark:bg-cyan-800 hover:dark:bg-cyan-700` : `bg-white transition-all duration-300 dark:bg-teal-800 hover:dark:bg-teal-700 `} `}
+            className={`w-full rounded-md px-2 lg:px-6 py-1 text-xs text-teal-900 shadow-md  shadow-stone-400 hover:text-black  dark:text-teal-200 dark:shadow-stone-950 ${chosenAmount === amount ? `bg-cyan-200 dark:bg-cyan-800 hover:dark:bg-cyan-700` : `bg-white transition-all duration-300 dark:bg-teal-800 hover:dark:bg-teal-700 `} `}
             key={amount}
             onClick={() => {
               setChosenAmount(amount)
@@ -165,7 +165,7 @@ export default function DonationForm() {
                   className="h-full w-full rounded-r-md pl-2 dark:bg-teal-800 dark:text-cyan-300"
                 />
               </div>
-              <p className="absolute right-0 top-0 text-right text-xs text-cyan-600 dark:text-cyan-400 ">
+              <p className="absolute max-w-[25vw]  right-0 top-0 text-right text-xs text-cyan-600 dark:text-cyan-400 ">
                 minimum is the equivalent of 1 USD
               </p>
             </>
@@ -174,7 +174,7 @@ export default function DonationForm() {
       </div>
 
       {/* This is some filler space for any legal related text if needed. you can always remove it */}
-      <p className="w-full text-cyan-800 dark:text-cyan-500">
+      <p className="w-full  text-cyan-800 dark:text-cyan-500">
         {`
           This Collective's Fiscal Host is a registered 501(c)(3) non-profit organization. Your contribution will be tax-deductible in the US, to the extent allowed by the law.`}
       </p>

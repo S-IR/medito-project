@@ -17,7 +17,6 @@ import { donorData } from '@/constants/types/donation'
  * This component presents the total donation goal that is  completed using a circle animation
  */
 const DonationProgress = () => {
-
   //I've set both to 1 to avoid any divide by 0 issues
   const [donationMetadata, setDonationMetadata] =
     useState<donationsMetadataRes>({ gathered: 1, target: 1 })
@@ -39,7 +38,11 @@ const DonationProgress = () => {
   })
 
   useEffect(() => {
-    if (!newDonorData || !newDonorData.donation|| !newDonorData.donation.amount)
+    if (
+      !newDonorData ||
+      !newDonorData.donation ||
+      !newDonorData.donation.amount
+    )
       return
 
     setDonationMetadata((oldMetadata) => {
@@ -68,13 +71,19 @@ const DonationProgress = () => {
   useEffect(() => {
     if (
       donationMetadata === undefined ||
-      donationMetadata.gathered === undefined
+      donationMetadata.gathered === undefined ||
+      donationMetadata.target === 1
     )
       return
-    setTimeout(()=> animationAPI.start({
-      progress: donationMetadata.gathered / donationMetadata.target,
-      opacity: 1, 
-    }), 200)
+
+    setTimeout(
+      () =>
+        animationAPI.start({
+          progress: donationMetadata.gathered / donationMetadata.target,
+          opacity: 1,
+        }),
+      200
+    )
   }, [donationMetadata, animationAPI])
 
   const scrollToDonationForm = () => {
