@@ -8,6 +8,9 @@ import { atom } from 'jotai'
 import Nav from '@/components/Nav'
 import { Toaster } from "@/components/ui/toaster"
 
+
+export const dynamic = "force-static";
+
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const sourceSerifFour = Source_Serif_4({
   subsets: ['latin'],
