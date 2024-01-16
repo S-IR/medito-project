@@ -42,6 +42,7 @@ const DonationProgress = () => {
 
       console.log('donationMetadata.gathered', donationMetadata.gathered);
       
+      
       animationAPI.start({
         to: {
           progress: metadata.gathered / metadata.target,
