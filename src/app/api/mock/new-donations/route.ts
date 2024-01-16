@@ -3,6 +3,7 @@
 import { donationData, donorData } from '@/constants/types/donation'
 import type { NextRequest } from 'next/server'
 import { v4 as uuidv4 } from 'uuid'
+export const runtime = 'edge'
 
 /**
  * Mock API call that gets the total amount gathered and the donation target
@@ -28,26 +29,13 @@ function createMockDonor(): donorData {
   return {
     amount: round5(Math.random() * 100),
     currency: 'USD',
-    date: new Date(),
+    date: new Date(Date.now()),
     id: uuidv4(),
     name: getRandomFullName(),
   }
 }
 
-/**
- * Helper function to create a random date between yesterday and 7 days ago
- */
-function getRandomDate(): Date {
-  const today = new Date()
-  const sevenDaysAgo = new Date()
-  sevenDaysAgo.setDate(today.getDate() - 7)
 
-  const todayTime = today.getTime()
-  const sevenDaysAgoTime = sevenDaysAgo.getTime()
-  const randomTime =
-    Math.random() * (todayTime - sevenDaysAgoTime) + sevenDaysAgoTime
-  return new Date(randomTime)
-}
 /**
  * Another helper function that gets a random name
  */

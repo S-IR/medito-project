@@ -75,14 +75,10 @@ const DonationProgress = () => {
     )
       return
 
-    setTimeout(
-      () =>
-        animationAPI.start({
-          progress: donationMetadata.gathered / donationMetadata.target,
-          opacity: 1,
-        }),
-      200
-    )
+    animationAPI.start({
+      progress: donationMetadata.gathered / donationMetadata.target,
+      opacity: 1,
+    })
   }, [donationMetadata, animationAPI])
 
   const scrollToDonationForm = () => {

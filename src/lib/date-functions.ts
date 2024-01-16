@@ -2,7 +2,7 @@ export function timeSinceNow(date: Date): string {
 
     
     // Get the current date and time
-    const now = new Date();
+    const now = new Date(Date.now());
 
     // Calculate the difference in milliseconds
     const diff = now.getTime() - date.getTime();
