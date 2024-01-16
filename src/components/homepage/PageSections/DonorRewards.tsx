@@ -7,8 +7,8 @@ import TierComponent from '../TierComponent'
 
 const DonorRewards = () => {
   return (
-    <article className="py-6 rounded-3xl flex  w-full  flex-col items-center justify-center bg-gradient-to-r lg:rounded-[60px] from-white via-white to-cyan-100 align-middle">
-      <h5 className="max-w-[80vw] lg:max-w-[500px] mt-16 font-handwriting text-5xl text-cyan-900 ">
+    <article className="py-6 rounded-3xl flex  w-full  flex-col items-center justify-center bg-gradient-to-r lg:rounded-[60px]align-middle">
+      <h5 className="max-w-[80vw] lg:max-w-[500px] mt-16 font-handwriting text-5xl text-cyan-900 dark:text-cyan-300 ">
         Support Our Cause
       </h5>
       <h6 className="my-8 max-w-[80vw] lg:max-w-[550px] text-center font-serif text-xl">

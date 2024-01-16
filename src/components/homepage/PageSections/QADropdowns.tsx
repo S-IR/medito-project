@@ -17,7 +17,7 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
  * https://ui.shadcn.com/docs/components/accordion
  */
 function QADropdowns() {
-  const [ref, inView] = useInView({once : true})
+  const [ref, inView] = useInView({ once: true })
 
   const fadeIn = useSpring({
     opacity: inView ? 1 : 0,
@@ -27,7 +27,7 @@ function QADropdowns() {
   return (
     <animated.article
       ref={ref}
-      className="flex w-full flex-col items-center justify-center rounded-3xl lg:rounded-[60px] bg-gradient-to-r from-cyan-100 via-white to-white py-[5vh] align-middle"
+      className="flex w-full flex-col items-center justify-center rounded-3xl bg-cyan-100 py-[5vh] align-middle dark:bg-neutral-950 lg:rounded-[60px]"
       style={fadeIn}
     >
       <Accordion
@@ -41,7 +41,7 @@ function QADropdowns() {
             key={question.question}
             value={question.question}
           >
-            <AccordionTrigger className="w-full border-b-[1px] border-black text-left font-serif text-2xl text-cyan-950">
+            <AccordionTrigger className="w-full border-b-[1px] border-black text-left font-serif text-2xl text-cyan-950 dark:border-white dark:text-cyan-300">
               {question.question}
             </AccordionTrigger>
             <AccordionContent className="py-4 font-sans">
@@ -78,32 +78,33 @@ const SubmitQuestion = () => {
     resolver: zodResolver(formSchema),
   })
 
-
-
-  const onSubmit = (data : fieldValues) => {
+  const onSubmit = (data: fieldValues) => {
     console.log(data)
     // Handle form submission here
   }
   return (
     <AccordionItem className=" w-full " value={`Have any more questions?`}>
-      <AccordionTrigger className="w-full border-b-[1px] border-black text-center  font-serif text-2xl text-cyan-800">
+      <AccordionTrigger className="w-full border-b-[1px] border-black text-center  dark:border-white dark:text-cyan-300 font-serif text-2xl text-cyan-800">
         {`Have any more questions?`}
       </AccordionTrigger>
       <AccordionContent className=" flex flex-col py-4 font-sans">
         <p className="pl-2 font-serif ">
           Submit your question and your email here and we will get you
         </p>
-        <form onSubmit={handleSubmit(onSubmit)} className="mt-6 flex w-full flex-col">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="mt-6 flex w-full flex-col"
+        >
           <div className="flex min-h-[85px] w-full flex-col">
             <label
               htmlFor="email-input "
-              className="relative ml-2 mb-1 text-stone-400   "
+              className="relative mb-1 ml-2 text-stone-400   "
             >
               Your email address
             </label>
             <div className="relative w-full">
               <input
-                className="w-full rounded-md border-stone-400 py-1 pl-6 shadow-md shadow-stone-400 transition-all duration-300  hover:outline-stone-800"
+                className="w-full dark:text-black rounded-md border-stone-400 py-1 pl-6 shadow-md shadow-stone-400 transition-all duration-300  hover:outline-stone-800"
                 id="email-input"
                 {...register('email')}
               />
@@ -112,22 +113,29 @@ const SubmitQuestion = () => {
               </p>
             </div>
 
-            {errors.email && <p className='ml-4 my-1 text-red-500'>{`${errors?.email?.message}`}</p>}
+            {errors.email && (
+              <p className="my-1 ml-4 text-red-500">{`${errors?.email?.message}`}</p>
+            )}
           </div>
           <div className="flex min-h-[85px] w-full flex-col">
-            <label htmlFor="question-input " className="ml-2 mb-1 text-stone-400   ">
+            <label
+              htmlFor="question-input "
+              className="mb-1 ml-2 text-stone-400   "
+            >
               Your question
             </label>
             <textarea
-              className="rounded-md border-stone-400 py-1 pl-6 shadow-md shadow-stone-400 transition-all duration-300  hover:outline-stone-800"
+              className="rounded-md dark:text-black border-stone-400 py-1 pl-6 shadow-md shadow-stone-400 transition-all duration-300  hover:outline-stone-800"
               id="question-input"
               {...register('question')}
             />
-            {errors.question && <p className='ml-4 my-1 text-red-500'>{`${errors?.question?.message}`}</p>}
+            {errors.question && (
+              <p className="my-1 ml-4 text-red-500">{`${errors?.question?.message}`}</p>
+            )}
           </div>
           <div className="flex w-full items-center justify-center align-middle">
             <button
-              className="font-handwriting mt-8 hover:bg-cyan-300 transition-all duration-300  rounded-3xl bg-cyan-400 text-cyan-900 text-lg px-10 py-1 "
+              className="mt-8 rounded-3xl bg-cyan-400 px-10 py-1  font-handwriting text-lg text-cyan-900 transition-all duration-300 hover:bg-cyan-300 "
               type="submit"
             >
               Submit

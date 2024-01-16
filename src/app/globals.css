@@ -5,5 +5,5 @@
 body {
   color: rgb(var(--foreground-rgb));
  
-  @apply font-sans text-black
+  @apply font-sans text-black dark:bg-[#0C0D11] dark:text-white
 }

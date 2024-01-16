@@ -1,8 +1,10 @@
 'use client'
 import { getDonationsMetadata } from '@/lib/fetches/donations'
 import { useQuery } from '@tanstack/react-query'
+import { useAtom } from 'jotai'
 import React, { useEffect, useMemo } from 'react'
 import { useSpring, animated } from 'react-spring'
+import { themeAtom } from '../Nav'
 
 /**
  * This component presents the total donation goal that is  completed using a circle animation
@@ -43,10 +45,12 @@ const CircularProgress = () => {
       targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
+
+  const [colorTheme] = useAtom(themeAtom)
   return (
     <div className=" flex flex-col items-center justify-center ">
       <div className="relative">
-        <animated.p className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 font-handwriting text-5xl text-cyan-500">
+        <animated.p className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 font-handwriting text-5xl text-cyan-500 dark:text-cyan-300">
           {animationProps.progress.to((p) => `${Math.round(p * 100)}%`)}
         </animated.p>
         <svg
@@ -59,7 +63,7 @@ const CircularProgress = () => {
             cy={diameter / 2}
             r={diameter / 2 - strokeWidth / 2}
             fill="none"
-            stroke="#fff"
+            stroke={colorTheme === 'light' ? "#fff" : "#0C0D11"}
             strokeWidth={strokeWidth}
           />
           <animated.circle
@@ -67,7 +71,7 @@ const CircularProgress = () => {
             cy={diameter / 2}
             r={diameter / 2 - strokeWidth / 2}
             fill="none"
-            stroke="#06b6d4"
+            stroke={colorTheme === 'light' ? "#06b6d4" : "#67e8f9"}
             strokeWidth={strokeWidth}
             strokeDasharray={circumference}
             strokeDashoffset={animationProps.progress.to(
@@ -82,8 +86,8 @@ const CircularProgress = () => {
         style={{ opacity: animationProps.opacity }}
         className={'flex flex-col items-center'}
       >
-        <div className="mt-8 flex w-full items-center justify-center font-handwriting text-2xl ">
-          <animated.p className={'min-w-[100px] text-center text-cyan-500'}>
+        <div className="mt-4 flex w-full items-center justify-center font-handwriting text-2xl ">
+          <animated.p className={'min-w-[100px] text-center text-cyan-500 dark:text-cyan-300'}>
             {data?.gathered}$
           </animated.p>
           <p className={'text-cyan-500 '}>/</p>
@@ -92,7 +96,7 @@ const CircularProgress = () => {
         <p className="m-0 p-0 font-handwriting text-2xl">collected</p>
         <button
           onClick={scrollToDonationForm}
-          className="rounded-3xl lg:mt-4 bg-cyan-400 px-8 py-4 font-handwriting text-2xl text-cyan-950 transition-all duration-300 hover:bg-cyan-300"
+          className="rounded-3xl lg:mt-4 bg-cyan-400 dark:bg-cyan-800 hover:dark:bg-cyan-700 dark:text-cyan-200 px-8 py-4 font-handwriting text-2xl text-cyan-950 transition-all duration-300 hover:bg-cyan-300"
         >
           Offer your support
         </button>

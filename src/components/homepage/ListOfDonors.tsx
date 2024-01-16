@@ -17,7 +17,7 @@ const ListOfDonors = () => {
   
   return (
     <section className="mt-12 animate-fadeIn flex w-full flex-col items-center justify-center gap-y-6 px-6 align-middle font-handwriting xl:absolute xl:right-0 xl:top-[45%] xl:max-w-[450px]">
-      <h4 className="!mb-8 text-center font-handwriting text-3xl text-cyan-900">
+      <h4 className="!mb-8 text-center font-handwriting text-3xl dark:text-cyan-500 text-cyan-900">
         Recent Supporters
       </h4>
       {data === undefined ? (

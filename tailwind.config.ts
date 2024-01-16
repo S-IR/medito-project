@@ -1,7 +1,9 @@
 import type { Config } from 'tailwindcss'
 const defaultTheme = require('tailwindcss/defaultTheme')
+const colors = require('tailwindcss/colors')
 
 const config: Config = {
+  darkMode: 'class',
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -50,7 +52,8 @@ const config: Config = {
       ],
       mono: ['ui-monospace', 'SFMono-Regular', ...defaultTheme.fontFamily.mono],
     },
+    
   },
-  plugins: [],
+  plugins: [require('tailwindcss-animate')],
 }
 export default config
