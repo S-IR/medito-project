@@ -1,39 +1,88 @@
 'use client'
-import { getDonors } from '@/lib/fetches/donations'
+import {
+  getDonors,
+  getNewDonor,
+  getNewDonorDelayMS,
+} from '@/lib/fetches/donations'
 import { useQuery } from '@tanstack/react-query'
 import { FaQuestion } from 'react-icons/fa'
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
 import { donorData, getCurrencySymbol } from '@/constants/types/donation'
 import { timeSinceNow } from '@/lib/date-functions'
 import { ClipLoader } from 'react-spinners'
+import { useToast } from '@/components/ui/use-toast'
+import { useTransition, animated, config } from 'react-spring'
 
 const ListOfDonors = () => {
-  const { data, isLoading } = useQuery({
-    queryKey: ['donors-metadata'],
-    queryFn: getDonors,
+  const [donors, setDonors] = useState<undefined | donorData[]>(undefined)
+  const [isFirstRun, setIsFirstRun] = useState(true)
+
+  useEffect(() => {
+    async function fetchDonors() {
+      const donors = await getDonors()
+      setDonors(donors.slice(0, 4))
+    }
+    fetchDonors()
+  }, [])
+
+  const { toast } = useToast()
+
+  const { data: newDonorData } = useQuery({
+    queryKey: ['new-donations'],
+    queryFn: getNewDonor,
+    refetchInterval: getNewDonorDelayMS,
   })
 
-  
+  //when a new donor comes through
+  useEffect(() => {
+    if (!newDonorData || !newDonorData.donation) return
+
+    toast({
+      title: `A new donation from ${newDonorData.donation.fromDonor.name}!`,
+      description: `Thank you for your donation of ${newDonorData.donation.amount}${getCurrencySymbol(newDonorData.donation.currency)}.`,
+      className: 'dark:bg-neutral-950 dark:border-slate-800 ',
+    })
+
+    setDonors((donors) => {
+      if (donors === undefined) {
+        return [newDonorData.donation?.fromDonor!]
+      } else {
+        return [newDonorData.donation?.fromDonor!, ...donors].slice(0, 4)
+      }
+    })
+  }, [newDonorData])
+
+  //handles the animation
+  const transitions = useTransition(donors, {
+    from: { opacity: 0, transform: 'translateY(-10px)' },
+    enter: { opacity: 1, transform: 'translateY(0)' },
+    leave: { opacity: 0, transform: 'translateY(-10px)' },
+    config: {duration: 300, ...config.gentle},
+    keys: (donor) => donor!.id,
+  })
+
   return (
-    <section className="mt-12 animate-fadeIn flex w-full flex-col items-center justify-center gap-y-6 px-6 align-middle font-handwriting xl:absolute xl:right-0 xl:top-[45%] xl:max-w-[450px]">
-      <h4 className="!mb-8 text-center font-handwriting text-3xl dark:text-cyan-500 text-cyan-900">
+    <section className="mt-12 flex w-full animate-fadeIn flex-col items-center justify-center gap-y-6 px-6 align-middle font-handwriting xl:absolute xl:right-0 xl:top-[45%] xl:max-w-[450px]">
+      <h4 className="!mb-8 text-center font-handwriting text-3xl text-cyan-900 dark:text-cyan-500">
         Recent Supporters
       </h4>
-      {data === undefined ? (
+      {donors === undefined ? (
         <div className="flex w-full items-center justify-center align-middle">
           <ClipLoader
             color={'#DAF9FB'}
-            loading={isLoading || data === undefined}
+            loading={donors === undefined}
             size={36}
             aria-label="Loading Spinner"
             data-testid="loader"
           />
         </div>
       ) : (
-        data.map((donor, i) =>
-          i >= 3 ? null : <DonorRow key={donor.id} donor={donor} />
-        )
+        transitions((styles, donor, t, i) => (
+          <animated.div className={"w-full"} style={styles}>
+            <DonorRow key={donor!.id} donor={donor!} />
+          </animated.div>
+        ))
       )}
     </section>
   )

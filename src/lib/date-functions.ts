@@ -1,4 +1,6 @@
 export function timeSinceNow(date: Date): string {
+
+    
     // Get the current date and time
     const now = new Date();
 
@@ -9,7 +11,7 @@ export function timeSinceNow(date: Date): string {
     const minutes = Math.floor(diff / 60000);
 
     if (minutes < 60) {
-        return `${minutes} minutes ago`;
+        return `less than an hour`;
     }
 
     // Convert the difference to hours

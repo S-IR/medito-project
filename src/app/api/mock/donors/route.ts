@@ -2,7 +2,6 @@
 
 import { donorData, possibleCurrency } from '@/constants/types/donation'
 import type { NextRequest } from 'next/server'
-import { v4 as uuidv4 } from 'uuid'
 
 export const runtime = 'edge'
 
@@ -47,56 +46,3 @@ export async function GET(request: NextRequest) {
   return new Response(JSON.stringify({ donors: startingDonors }))
 }
 
-function createMockDonor(): donorData{
-  return {
-    amount: Math.round(Math.random() * 100),
-    currency: "USD",
-    date: getRandomDate(),
-    id: uuidv4(),
-    name: getRandomFullName(),
-  }
-}
-
-/**
- * Helper function to create a random date between yesterday and 7 days ago
- */
-function getRandomDate(): Date {
-  const today = new Date()
-  const sevenDaysAgo = new Date()
-  sevenDaysAgo.setDate(today.getDate() - 7)
-
-  const todayTime = today.getTime()
-  const sevenDaysAgoTime = sevenDaysAgo.getTime()
-  const randomTime =
-    Math.random() * (todayTime - sevenDaysAgoTime) + sevenDaysAgoTime
-  return new Date(randomTime)
-}
-/**
- * Another helper function that gets a random name
- */
-function getRandomFullName(): string {
-  const randomIndex = Math.floor(Math.random() * randomNames.length)
-  return randomNames[randomIndex]
-}
-const randomNames = [
-  'Olivia Piers',
-  'Liam Henderson',
-  'Emma Clarkson',
-  'Noah Black',
-  'Ava Sinclair',
-  'Oliver Stone',
-  'Sophia Hartley',
-  'Elijah Moore',
-  'Isabella Young',
-  'Charlotte Green',
-  'Amelia Brown',
-  "James O'Neil",
-  'Mia Wallace',
-  'Benjamin King',
-  'Harper Lee',
-  'Lucas Graham',
-  'Evelyn Smith',
-  'Henry Jones',
-  'Luna Bright',
-  'Alexander Knight',
-] as const

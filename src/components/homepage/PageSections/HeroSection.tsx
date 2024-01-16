@@ -1,6 +1,6 @@
 import React from 'react'
 import hydrationData from '@/constants/homepage/HeroSection.json'
-import CircularProgress from '../CircularProgress'
+import DonationProgress from '../DonationProgress'
 import {
   HydrationBoundary,
   QueryClient,
@@ -39,7 +39,7 @@ export default async function HeroSection() {
         </h2>
       </div>
       <HydrationBoundary state={dehydrate(donationMetadataQueryClient)}>
-        <CircularProgress />
+        <DonationProgress />
       </HydrationBoundary>
       <div className="mt-20 animate-fadeIn flex w-full flex-col items-center lg:items-baseline ">
         <div className="w-[95vw] rounded-3xl bg-cyan-100 dark:bg-neutral-900 px-2 py-4 text-xl shadow-md dark:shadow-stone-950 shadow-stone-300 lg:ml-[2vw] lg:w-auto lg:max-w-[60vw]">

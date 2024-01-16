@@ -2,7 +2,6 @@
   "tiers": [
     {
       "value": 5,
-      "currencySymbol": "$",
       "rewards": [
         "Access to monthly newsletter",
         "Invitation to community events"
@@ -10,7 +9,6 @@
     },
     {
       "value": 10,
-      "currencySymbol": "$",
       "rewards": [
         "Access to monthly newsletter",
         "Invitation to community events",
@@ -19,7 +17,6 @@
     },
     {
       "value": 15,
-      "currencySymbol": "$",
       "rewards": [
         "Access to monthly newsletter",
         "Invitation to community events",
@@ -29,7 +26,6 @@
     },
     {
       "value": 20,
-      "currencySymbol": "$",
       "rewards": [
         "Access to monthly newsletter",
         "Invitation to community events",

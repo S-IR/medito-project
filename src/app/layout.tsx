@@ -6,6 +6,7 @@ import { useState } from 'react'
 import Providers from './providers'
 import { atom } from 'jotai'
 import Nav from '@/components/Nav'
+import { Toaster } from "@/components/ui/toaster"
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const sourceSerifFour = Source_Serif_4({
@@ -35,6 +36,7 @@ export default function RootLayout({
         <Providers>
           <Nav />
           {children}
+          <Toaster />
         </Providers>
       </body>
     </html>

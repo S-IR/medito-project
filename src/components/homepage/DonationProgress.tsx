@@ -1,19 +1,55 @@
 'use client'
-import { getDonationsMetadata } from '@/lib/fetches/donations'
+import {
+  donationsMetadataRes,
+  getDonationsMetadata,
+  getNewDonor,
+  getNewDonorDelayMS,
+} from '@/lib/fetches/donations'
 import { useQuery } from '@tanstack/react-query'
 import { useAtom } from 'jotai'
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useSpring, animated } from 'react-spring'
 import { themeAtom } from '../Nav'
+import { io } from 'socket.io-client'
+import { mockWSServer } from '@/lib/mocks/mockWS'
+import { donorData } from '@/constants/types/donation'
 
 /**
  * This component presents the total donation goal that is  completed using a circle animation
  */
-const CircularProgress = () => {
-  const { data } = useQuery({
-    queryKey: ['donations-metadata'],
-    queryFn: getDonationsMetadata,
+const DonationProgress = () => {
+
+  //I've set both to 1 to avoid any divide by 0 issues
+  const [donationMetadata, setDonationMetadata] =
+    useState<donationsMetadataRes>({ gathered: 1, target: 1 })
+
+  //at first fetch the full metadata
+  useEffect(() => {
+    const fetchMetadata = async () => {
+      const metadata = await getDonationsMetadata()
+      setDonationMetadata(metadata)
+    }
+    fetchMetadata()
+  }, [])
+
+  //then IF there are subsequent coming donations (I've used react query to be able to do this fetch in any component and use the same data) change the gathered amount
+  const { data: newDonorData } = useQuery({
+    queryKey: ['new-donations'],
+    queryFn: getNewDonor,
+    refetchInterval: getNewDonorDelayMS,
   })
+
+  useEffect(() => {
+    if (!newDonorData || !newDonorData.donation|| !newDonorData.donation.amount)
+      return
+
+    setDonationMetadata((oldMetadata) => {
+      return {
+        ...oldMetadata,
+        gathered: oldMetadata?.gathered + newDonorData!.donation!.amount,
+      }
+    })
+  }, [newDonorData])
 
   // Define the diameter and stroke of the circle
   const diameter = 250
@@ -31,20 +67,23 @@ const CircularProgress = () => {
 
   //starts the animation from 0 to the given value
   useEffect(() => {
-    if (data === undefined || data.gathered === undefined) return
-
+    if (
+      donationMetadata === undefined ||
+      donationMetadata.gathered === undefined
+    )
+      return
     animationAPI.start({
-      progress: data.gathered / data.target,
-      opacity: 1, // Target opacity
+      progress: donationMetadata.gathered / donationMetadata.target,
+      opacity: 1, 
     })
-  }, [data, animationAPI])
+  }, [donationMetadata, animationAPI])
 
   const scrollToDonationForm = () => {
-    const targetElement = document.getElementById('donation-form');
+    const targetElement = document.getElementById('donation-form')
     if (targetElement) {
-      targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
     }
-  };
+  }
 
   const [colorTheme] = useAtom(themeAtom)
   return (
@@ -63,7 +102,7 @@ const CircularProgress = () => {
             cy={diameter / 2}
             r={diameter / 2 - strokeWidth / 2}
             fill="none"
-            stroke={colorTheme === 'light' ? "#fff" : "#0C0D11"}
+            stroke={colorTheme === 'light' ? '#fff' : '#0C0D11'}
             strokeWidth={strokeWidth}
           />
           <animated.circle
@@ -71,7 +110,7 @@ const CircularProgress = () => {
             cy={diameter / 2}
             r={diameter / 2 - strokeWidth / 2}
             fill="none"
-            stroke={colorTheme === 'light' ? "#06b6d4" : "#67e8f9"}
+            stroke={colorTheme === 'light' ? '#06b6d4' : '#67e8f9'}
             strokeWidth={strokeWidth}
             strokeDasharray={circumference}
             strokeDashoffset={animationProps.progress.to(
@@ -87,23 +126,28 @@ const CircularProgress = () => {
         className={'flex flex-col items-center'}
       >
         <div className="mt-4 flex w-full items-center justify-center font-handwriting text-2xl ">
-          <animated.p className={'min-w-[100px] text-center text-cyan-500 dark:text-cyan-300'}>
-            {data?.gathered}$
+          <animated.p
+            className={
+              'min-w-[100px] text-center text-cyan-500 dark:text-cyan-300'
+            }
+          >
+            {donationMetadata?.gathered}$
           </animated.p>
           <p className={'text-cyan-500 '}>/</p>
-          <p className="min-w-[100px] text-center">{data?.target}$</p>
+          <p className="min-w-[100px] text-center">
+            {donationMetadata?.target}$
+          </p>
         </div>
         <p className="m-0 p-0 font-handwriting text-2xl">collected</p>
         <button
           onClick={scrollToDonationForm}
-          className="rounded-3xl lg:mt-4 bg-cyan-400 dark:bg-cyan-800 hover:dark:bg-cyan-700 dark:text-cyan-200 px-8 py-4 font-handwriting text-2xl text-cyan-950 transition-all duration-300 hover:bg-cyan-300"
+          className="rounded-3xl bg-cyan-400 px-8 py-4 font-handwriting text-2xl text-cyan-950 transition-all duration-300 hover:bg-cyan-300 dark:bg-cyan-800 dark:text-cyan-200 hover:dark:bg-cyan-700 lg:mt-4"
         >
           Offer your support
         </button>
       </animated.div>
-      
     </div>
   )
 }
 
-export default CircularProgress
+export default DonationProgress

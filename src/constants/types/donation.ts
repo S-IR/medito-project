@@ -1,6 +1,7 @@
 
 export const possibleCurrencies = ["USD"] as const
 export const possibleCurrenciesSymbol = ["$"] as const
+export const possibleIntervals = ['month', 'year', 'one-time'] as const
 
 export type possibleCurrency = typeof possibleCurrencies[number]
 
@@ -22,4 +23,10 @@ export function getCurrencySymbol(
     case 'USD':
       return '$'
   }
+}
+
+export type donationData = {
+  amount: number
+  currency: possibleCurrency
+  fromDonor: donorData
 }
