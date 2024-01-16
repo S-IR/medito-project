@@ -3,7 +3,6 @@
 import { donorData, possibleCurrency } from '@/constants/types/donation'
 import type { NextRequest } from 'next/server'
 
-export const runtime = 'edge'
 
 const now = new Date()
 const millisecondsPerHour = 60 * 60 * 1000

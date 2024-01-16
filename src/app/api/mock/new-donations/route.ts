@@ -3,7 +3,6 @@
 import { donationData, donorData } from '@/constants/types/donation'
 import type { NextRequest } from 'next/server'
 import { v4 as uuidv4 } from 'uuid'
-export const runtime = 'edge'
 
 /**
  * Mock API call that gets the total amount gathered and the donation target

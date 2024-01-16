@@ -10,7 +10,6 @@ import { useAtom } from 'jotai'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useSpring, animated, config } from 'react-spring'
 import { themeAtom } from '../Nav'
-import { io } from 'socket.io-client'
 import { donorData } from '@/constants/types/donation'
 
 /**
