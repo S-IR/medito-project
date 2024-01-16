@@ -43,7 +43,7 @@ const DonationProgress = () => {
       !newDonorData.donation.amount
     )
       return
-
+      
     setDonationMetadata((oldMetadata) => {
       return {
         ...oldMetadata,
@@ -74,12 +74,13 @@ const DonationProgress = () => {
       donationMetadata.target === 1
     )
       return
+      console.log('donationMetadata', donationMetadata);
 
     animationAPI.start({
       progress: donationMetadata.gathered / donationMetadata.target,
       opacity: 1,
     })
-  }, [donationMetadata, animationAPI])
+  }, [donationMetadata])
 
   const scrollToDonationForm = () => {
     const targetElement = document.getElementById('donation-form')

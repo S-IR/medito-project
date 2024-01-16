@@ -95,6 +95,9 @@ const DonorRow = ({ donor }: { donor: donorData }) => {
     () => getCurrencySymbol(donor.currency),
     [donor.currency]
   )
+
+  console.log('donor', donor);
+  
   const time = useMemo(() => timeSinceNow(donor.date), [donor.date])
   return (
     <div className="flex w-full items-center gap-x-4  ">
