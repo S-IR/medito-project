@@ -61,9 +61,11 @@ const DonationProgress = () => {
 
   //progress will be a value from 0 to value / max in the animation. Current value will just be a value from 0 to the actual number
   const [animationProps, animationAPI] = useSpring(() => ({
-    progress: 0,
-    opacity: 0, // Initial opacity
-    config: { duration: 1, ...config.gentle },
+    from : {
+      progress: 0,
+      opacity: 0, // Initial opacity
+    },
+    config: { duration: 0.5, ...config.gentle },
   }))
 
   //starts the animation from 0 to the given value
@@ -77,8 +79,10 @@ const DonationProgress = () => {
       console.log('donationMetadata', donationMetadata);
 
     animationAPI.start({
+     to: {
       progress: donationMetadata.gathered / donationMetadata.target,
       opacity: 1,
+     }
     })
   }, [donationMetadata])
 

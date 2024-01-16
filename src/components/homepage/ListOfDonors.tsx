@@ -96,7 +96,6 @@ const DonorRow = ({ donor }: { donor: donorData }) => {
     [donor.currency]
   )
 
-  console.log('donor', donor);
   
   const time = useMemo(() => timeSinceNow(donor.date), [donor.date])
   return (

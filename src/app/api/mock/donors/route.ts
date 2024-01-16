@@ -43,6 +43,8 @@ const startingDonors: donorData[] = [
  * @returns
  */
 export async function GET(request: NextRequest) {
+
+  //I did this new date because I was running some issues in production with the dates
   return new Response(JSON.stringify({ donors: startingDonors.map((donor)=> {
     return {
       ...donor,
