@@ -13,12 +13,7 @@ import ListOfDonors from '../ListOfDonors'
  * This section should appear at the top on the homepage ("/")
  */
 export default async function HeroSection() {
-  const donationMetadataQueryClient = new QueryClient()
 
-  await donationMetadataQueryClient.prefetchQuery({
-    queryKey: ['donations-metadata'],
-    queryFn: getDonationsMetadata,
-  })
 
   const donorsQueryClient = new QueryClient()
 
@@ -38,15 +33,13 @@ export default async function HeroSection() {
           {hydrationData.subTitle}
         </h2>
       </div>
-      <HydrationBoundary state={dehydrate(donationMetadataQueryClient)}>
         <DonationProgress />
-      </HydrationBoundary>
       <div className="mt-20 animate-fadeIn flex w-full flex-col items-center lg:items-baseline ">
         <div className="w-[95vw] rounded-3xl bg-cyan-100 dark:bg-neutral-900 px-2 py-4 text-xl shadow-md dark:shadow-stone-950 shadow-stone-300 lg:ml-[2vw] lg:w-auto lg:max-w-[60vw]">
           <h3 className="p-2 font-serif">{hydrationData.description}</h3>
         </div>
       </div>
-      <HydrationBoundary state={dehydrate(donationMetadataQueryClient)}>
+      <HydrationBoundary state={dehydrate(donorsQueryClient)}>
         <ListOfDonors />
       </HydrationBoundary>
     </article>
