@@ -20,20 +20,35 @@ const DonationProgress = () => {
   const [donationMetadata, setDonationMetadata] =
     useState<donationsMetadataRes>({ gathered: 1, target: 1 })
 
+  //progress will be a value from 0 to value / max in the animation. Current value will just be a value from 0 to the actual number
+  const [animationProps, animationAPI] = useSpring(() => ({
+    from: {
+      progress: 0,
+      opacity: 0, // Initial opacity
+    },
+    config: config.gentle,
+  }))
+
   //at first fetch the full metadata
   useEffect(() => {
     const fetchMetadata = async () => {
       const metadata = await getDonationsMetadata()
       setDonationMetadata(metadata)
+      return metadata
     }
-    fetchMetadata()
 
-    animationAPI.start({
-      to: {
-        progress: donationMetadata.gathered / donationMetadata.target,
-        opacity: 1,
-      },
-    })
+    setTimeout(async() => {
+      const metadata = await fetchMetadata()
+
+      console.log('donationMetadata.gathered', donationMetadata.gathered);
+      
+      animationAPI.start({
+        to: {
+          progress: metadata.gathered / metadata.target,
+          opacity: 1,
+        },
+      })
+    }, 50)
   }, [])
 
   //then IF there are subsequent coming donations (I've used react query to be able to do this fetch in any component and use the same data) change the gathered amount
@@ -66,32 +81,24 @@ const DonationProgress = () => {
   // Calculate the circumference of the circle
   const circumference = 2 * Math.PI * (diameter / 2)
 
-  //progress will be a value from 0 to value / max in the animation. Current value will just be a value from 0 to the actual number
-  const [animationProps, animationAPI] = useSpring(() => ({
-    from: {
-      progress: 0,
-      opacity: 0, // Initial opacity
-    },
-    config: { duration: 0.5, ...config.gentle },
-  }))
-
   //starts the animation from 0 to the given value
   useEffect(() => {
-    if (
-      donationMetadata === undefined ||
-      donationMetadata.gathered === undefined ||
-      donationMetadata.target === 1
-    )
-      return
-    console.log('donationMetadata', donationMetadata)
+    if (newDonorData && newDonorData.donation && newDonorData.donation.amount) {
+      const newGathered =
+        donationMetadata.gathered + newDonorData.donation.amount
+      setDonationMetadata((oldMetadata) => ({
+        ...oldMetadata,
+        gathered: newGathered,
+      }))
 
-    animationAPI.start({
-      to: {
-        progress: donationMetadata.gathered / donationMetadata.target,
+      console.log('new gathered', newGathered)
+
+      animationAPI.start({
+        progress: newGathered / donationMetadata.target,
         opacity: 1,
-      },
-    })
-  }, [donationMetadata])
+      })
+    }
+  }, [newDonorData, donationMetadata, animationAPI])
 
   const scrollToDonationForm = () => {
     const targetElement = document.getElementById('donation-form')
