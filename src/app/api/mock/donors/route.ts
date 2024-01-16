@@ -43,6 +43,11 @@ const startingDonors: donorData[] = [
  * @returns
  */
 export async function GET(request: NextRequest) {
-  return new Response(JSON.stringify({ donors: startingDonors }))
+  return new Response(JSON.stringify({ donors: startingDonors.map((donor)=> {
+    return {
+      ...donor,
+      date : new Date(Date.now()  -  millisecondsPerHour  * Math.round(Math.random() * 10))
+    }
+  }) }))
 }
 
