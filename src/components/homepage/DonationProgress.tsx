@@ -8,7 +8,7 @@ import {
 import { useQuery } from '@tanstack/react-query'
 import { useAtom } from 'jotai'
 import React, { useEffect, useMemo, useState } from 'react'
-import { useSpring, animated } from 'react-spring'
+import { useSpring, animated, config } from 'react-spring'
 import { themeAtom } from '../Nav'
 import { io } from 'socket.io-client'
 import { donorData } from '@/constants/types/donation'
@@ -61,7 +61,7 @@ const DonationProgress = () => {
   const [animationProps, animationAPI] = useSpring(() => ({
     progress: 0,
     opacity: 0, // Initial opacity
-    config: { duration: 1 },
+    config: { duration: 1, ...config.gentle },
   }))
 
   //starts the animation from 0 to the given value
@@ -71,10 +71,10 @@ const DonationProgress = () => {
       donationMetadata.gathered === undefined
     )
       return
-    animationAPI.start({
+    setTimeout(()=> animationAPI.start({
       progress: donationMetadata.gathered / donationMetadata.target,
       opacity: 1, 
-    })
+    }), 200)
   }, [donationMetadata, animationAPI])
 
   const scrollToDonationForm = () => {
