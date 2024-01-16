@@ -65,7 +65,6 @@ export default function DonationForm() {
     useState<(typeof possibleAmounts)[number]>(amountSetByPage)
 
   const onSubmit = async (data: formSubmit) => {
-    console.log(data)
     const STRIPE_PK = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
     const stripe = await loadStripe(STRIPE_PK)
 

@@ -11,7 +11,6 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { useSpring, animated } from 'react-spring'
 import { themeAtom } from '../Nav'
 import { io } from 'socket.io-client'
-import { mockWSServer } from '@/lib/mocks/mockWS'
 import { donorData } from '@/constants/types/donation'
 
 /**
