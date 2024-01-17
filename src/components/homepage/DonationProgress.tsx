@@ -26,6 +26,7 @@ const DonationProgress = () => {
       progress: 0,
       opacity: 0, // Initial opacity
     },
+
     config: config.gentle,
   }))
 
@@ -36,21 +37,15 @@ const DonationProgress = () => {
       setDonationMetadata(metadata)
       return metadata
     }
-
-    setTimeout(async() => {
-      const metadata = await fetchMetadata()
-
-      console.log('donationMetadata.gathered', donationMetadata.gathered);
-      
-      
-      animationAPI.start({
-        to: {
-          progress: metadata.gathered / metadata.target,
-          opacity: 1,
-        },
-      })
-    }, 50)
+    fetchMetadata()
   }, [])
+
+  useEffect(() => {
+    animationAPI.start({
+      progress: donationMetadata.gathered / donationMetadata.target,
+      opacity: 1,
+    })
+  }, [donationMetadata])
 
   //then IF there are subsequent coming donations (I've used react query to be able to do this fetch in any component and use the same data) change the gathered amount
   const { data: newDonorData } = useQuery({
@@ -92,14 +87,12 @@ const DonationProgress = () => {
         gathered: newGathered,
       }))
 
-      console.log('new gathered', newGathered)
-
       animationAPI.start({
         progress: newGathered / donationMetadata.target,
         opacity: 1,
       })
     }
-  }, [newDonorData, donationMetadata, animationAPI])
+  }, [newDonorData, animationAPI])
 
   const scrollToDonationForm = () => {
     const targetElement = document.getElementById('donation-form')
