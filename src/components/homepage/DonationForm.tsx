@@ -11,7 +11,7 @@ import { atom, useAtom } from 'jotai'
 import { loadStripe } from '@stripe/stripe-js'
 import getStripe from '@/lib/utils/get-stripe'
 import Stripe from 'stripe'
-import { useTransition, animated, useSpring } from 'react-spring'
+import { useTransition, animated, useSpring, useInView } from 'react-spring'
 
 const possibleDurations = [
   {
@@ -57,6 +57,8 @@ export default function DonationForm() {
       interval: 'one-time',
     },
   })
+
+  //amountSetByPage is a variable that can be set by any component
   const [amountSetByPage] =
     useAtom<(typeof possibleAmounts)[number]>(formAmountAtom)
 
@@ -81,6 +83,7 @@ export default function DonationForm() {
     stripe?.redirectToCheckout({ sessionId })
   }
 
+  //if amountPerPage changes then update the form
   useEffect(() => {
     if (
       !possibleAmounts.includes(
@@ -91,7 +94,7 @@ export default function DonationForm() {
     setChosenAmount(amountSetByPage)
     if (amountSetByPage === 'custom') return
     setFormValue('amount', amountSetByPage)
-  }, [amountSetByPage, setFormValue])
+  }, [amountSetByPage])
 
   const currentInterval = watch('interval')
 
@@ -99,11 +102,13 @@ export default function DonationForm() {
     from: { opacity: 0 },
     to: { opacity: chosenAmount === 'custom' ? 1 : 0 },
   })
+
+
   return (
     <form
       id={'donation-form'}
       onSubmit={handleSubmit(onSubmit)}
-      className="flex max-w-[90vw] w-full flex-col gap-y-6 rounded-3xl bg-teal-100 px-8 py-6  shadow-md shadow-stone-400 dark:bg-teal-900 dark:shadow-stone-950 lg:max-w-[600px]"
+      className="flex w-full max-w-[90vw] flex-col gap-y-6 rounded-3xl bg-teal-100 px-8 py-6  shadow-md shadow-stone-400 dark:bg-teal-900 dark:shadow-stone-950 lg:max-w-[600px]"
     >
       <p className="font-handwriting text-3xl font-light text-teal-950 dark:text-teal-200 lg:my-2 lg:w-full lg:text-center lg:text-5xl ">
         Begin Contributing
@@ -112,7 +117,7 @@ export default function DonationForm() {
         {possibleDurations.map((duration) => (
           <button
             type="button"
-            className={`w-full  rounded-md px-4 text-xs lg:px-10 py-1 lg:text-smp lg:py-2 text-teal-900  shadow-md shadow-stone-400 hover:text-black dark:text-teal-200 dark:shadow-stone-950 ${currentInterval === duration.value ? `bg-cyan-200 dark:bg-cyan-800 hover:dark:bg-cyan-700` : `bg-white transition-all duration-300 dark:bg-teal-800 hover:dark:bg-teal-700 `} `}
+            className={`lg:text-smp  w-full rounded-md px-4 py-1 text-xs text-teal-900 shadow-md shadow-stone-400  hover:text-black dark:text-teal-200 dark:shadow-stone-950 lg:px-10 lg:py-2 ${currentInterval === duration.value ? `bg-cyan-200 dark:bg-cyan-800 hover:dark:bg-cyan-700` : `bg-white transition-all duration-300 dark:bg-teal-800 hover:dark:bg-teal-700 `} `}
             key={duration.value}
             onClick={() => setFormValue('interval', duration.value)}
           >
@@ -124,7 +129,7 @@ export default function DonationForm() {
         {possibleAmounts.map((amount) => (
           <button
             type="button"
-            className={`w-full rounded-md px-2 lg:px-6 py-1 lg:py-2 lg:text-smp text-xs text-teal-900 shadow-md  shadow-stone-400 hover:text-black  dark:text-teal-200 dark:shadow-stone-950 ${chosenAmount === amount ? `bg-cyan-200 dark:bg-cyan-800 hover:dark:bg-cyan-700` : `bg-white transition-all duration-300 dark:bg-teal-800 hover:dark:bg-teal-700 `} `}
+            className={`lg:text-smp w-full rounded-md px-2 py-1 text-xs text-teal-900 shadow-md shadow-stone-400 hover:text-black  dark:text-teal-200 dark:shadow-stone-950  lg:px-6 lg:py-2 ${chosenAmount === amount ? `bg-cyan-200 dark:bg-cyan-800 hover:dark:bg-cyan-700` : `bg-white transition-all duration-300 dark:bg-teal-800 hover:dark:bg-teal-700 `} `}
             key={amount}
             onClick={() => {
               setChosenAmount(amount)
@@ -164,7 +169,7 @@ export default function DonationForm() {
                   className="h-full w-full rounded-r-md pl-2 dark:bg-teal-800 dark:text-cyan-300"
                 />
               </div>
-              <p className="absolute max-w-[25vw]  right-0 top-0 text-right text-xs text-cyan-600 dark:text-cyan-400 ">
+              <p className="absolute right-0  top-0 max-w-[25vw] text-right text-xs text-cyan-600 dark:text-cyan-400 ">
                 minimum is the equivalent of 1 USD
               </p>
             </>
