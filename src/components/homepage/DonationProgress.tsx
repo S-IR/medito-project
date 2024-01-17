@@ -98,7 +98,11 @@ const DonationProgress = () => {
     <div className=" flex flex-col items-center justify-center ">
       <div className="relative">
         <animated.p className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 font-handwriting text-5xl text-cyan-500 dark:text-cyan-300">
-          {animationProps.progress.to((p) => `${Math.round(p*100)}%`)}
+          {animationProps.progress.to((p) => {
+            console.log('p as a number', p, 'Math.round(p*100)', Math.round(p*100));
+            return `${Math.round(p*100)}%`
+            
+          })}
         </animated.p>
         <svg
           width={diameter}
