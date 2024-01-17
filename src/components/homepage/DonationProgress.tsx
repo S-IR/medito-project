@@ -41,6 +41,7 @@ const DonationProgress = () => {
   }, [])
 
   useEffect(() => {
+    if (donationMetadata.target === 0) return
     console.log('donation metadata', donationMetadata);
     console.log('donationMetadata.gathered', donationMetadata.gathered, "donationMetadata.target", donationMetadata.target, "equation", Math.max(1, donationMetadata.gathered) / donationMetadata.target);
 
