@@ -13,6 +13,8 @@ import { timeSinceNow } from '@/lib/date-functions'
 import { ClipLoader } from 'react-spinners'
 import { useToast } from '@/components/ui/use-toast'
 import { useTransition, animated, config } from 'react-spring'
+import { useAtom } from 'jotai'
+import { themeAtom } from '../Nav'
 
 const ListOfDonors = () => {
   const [donors, setDonors] = useState<undefined | donorData[]>(undefined)
@@ -88,6 +90,7 @@ const ListOfDonors = () => {
   )
 }
 
+
 export default ListOfDonors
 
 const DonorRow = ({ donor }: { donor: donorData }) => {
@@ -96,6 +99,7 @@ const DonorRow = ({ donor }: { donor: donorData }) => {
     [donor.currency]
   )
 
+  const [theme] = useAtom(themeAtom)
   
   const time = useMemo(() => timeSinceNow(donor.date), [donor.date])
   return (
@@ -110,10 +114,10 @@ const DonorRow = ({ donor }: { donor: donorData }) => {
         ) : (
           // if there is no profile picture this code will get a random color from the array below depending on the donor's id (so that the donor will always have the same color every time). Then it will use that color to create a circle
           <div
-            className="!m-0 flex h-[50px] w-[50px] items-center justify-center rounded-full !p-0 align-middle"
+            className="!m-0 flex h-[50px] w-[50px] bg-cyan-50 items-center justify-center rounded-full !p-0 align-middle"
             style={{ backgroundColor: randomColorForId(donor.id) }}
           >
-            <FaQuestion className="opacity-30" size={24} />
+            <FaQuestion color={theme === 'dark' ? '#0A0A0A': `#ECFEFF` }  size={24} />
           </div>
         )}
       </div>
