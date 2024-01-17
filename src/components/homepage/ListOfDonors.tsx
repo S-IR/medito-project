@@ -16,7 +16,6 @@ import { useTransition, animated, config } from 'react-spring'
 
 const ListOfDonors = () => {
   const [donors, setDonors] = useState<undefined | donorData[]>(undefined)
-  const [isFirstRun, setIsFirstRun] = useState(true)
 
   useEffect(() => {
     async function fetchDonors() {
@@ -78,7 +77,7 @@ const ListOfDonors = () => {
           />
         </div>
       ) : (
-        transitions((styles, donor, t, i) => (
+        transitions((styles, donor) => (
           <animated.div className={"w-full"} style={styles}>
             <DonorRow key={donor!.id} donor={donor!} />
           </animated.div>

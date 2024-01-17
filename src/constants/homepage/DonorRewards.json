@@ -1,4 +1,6 @@
 {
+  "title" : "Support Our Cause",
+  "subtitle" : "Your generous donation helps us continue our mission. Choose a donation tier and enjoy exclusive rewards.",
   "tiers": [
     {
       "value": 5,

@@ -11,7 +11,10 @@ import { useInView, useSpring, animated } from 'react-spring'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
+
+
 /**
+ * Displays common donation related questions and their answers. Also includes a form that allows users to ask more questions
  * This section is on part using the accordion component given by shadcdn
  * more details here
  * https://ui.shadcn.com/docs/components/accordion

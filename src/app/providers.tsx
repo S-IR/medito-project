@@ -9,6 +9,10 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import Nav from '@/components/Nav'
 import { Provider as JotaiProvider } from 'jotai'
 
+
+/**
+ * A wrapper component for all of the providers that the project needs
+ */
 export default function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(
     () =>

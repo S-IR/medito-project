@@ -4,11 +4,10 @@ import {
   HeroSection,
   QADropdowns,
 } from "@/components/homepage/PageSections";
-import Image from "next/image";
 
 export default function Home() {
   return (
-    <main className="min-h-screen ">
+    <main className="min-h-screen w-full">
       <HeroSection />
       <QADropdowns />
       <DonorRewards />

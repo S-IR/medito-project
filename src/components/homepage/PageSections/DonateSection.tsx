@@ -14,7 +14,7 @@ import DonationForm from '../DonationForm'
 
 
 /**
- * This section is a wrapper around the donation form.
+ * This section is a wrapper around a donation form that ultimately sends the user to Stripe.
  * @returns
  */
 function DonateSection() {

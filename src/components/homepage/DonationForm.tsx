@@ -40,8 +40,7 @@ const formSchema = z.object({
 })
 type formSubmit = z.infer<typeof formSchema>
 /**
- * A donation form that allows that redirects the user to stripe. Can be extracted from here if needed
- * @returns
+ * A donation form that allows that redirects the user to stripe.
  */
 export default function DonationForm() {
   const {
@@ -113,7 +112,7 @@ export default function DonationForm() {
         {possibleDurations.map((duration) => (
           <button
             type="button"
-            className={`w-full  rounded-md px-4 text-xs lg:px-10 py-1 text-teal-900  shadow-md shadow-stone-400 hover:text-black dark:text-teal-200 dark:shadow-stone-950 ${currentInterval === duration.value ? `bg-cyan-200 dark:bg-cyan-800 hover:dark:bg-cyan-700` : `bg-white transition-all duration-300 dark:bg-teal-800 hover:dark:bg-teal-700 `} `}
+            className={`w-full  rounded-md px-4 text-xs lg:px-10 py-1 lg:text-sm lg:py-2 text-teal-900  shadow-md shadow-stone-400 hover:text-black dark:text-teal-200 dark:shadow-stone-950 ${currentInterval === duration.value ? `bg-cyan-200 dark:bg-cyan-800 hover:dark:bg-cyan-700` : `bg-white transition-all duration-300 dark:bg-teal-800 hover:dark:bg-teal-700 `} `}
             key={duration.value}
             onClick={() => setFormValue('interval', duration.value)}
           >
@@ -125,7 +124,7 @@ export default function DonationForm() {
         {possibleAmounts.map((amount) => (
           <button
             type="button"
-            className={`w-full rounded-md px-2 lg:px-6 py-1 text-xs text-teal-900 shadow-md  shadow-stone-400 hover:text-black  dark:text-teal-200 dark:shadow-stone-950 ${chosenAmount === amount ? `bg-cyan-200 dark:bg-cyan-800 hover:dark:bg-cyan-700` : `bg-white transition-all duration-300 dark:bg-teal-800 hover:dark:bg-teal-700 `} `}
+            className={`w-full rounded-md px-2 lg:px-6 py-1 lg:py-2 lg:text-sm text-xs text-teal-900 shadow-md  shadow-stone-400 hover:text-black  dark:text-teal-200 dark:shadow-stone-950 ${chosenAmount === amount ? `bg-cyan-200 dark:bg-cyan-800 hover:dark:bg-cyan-700` : `bg-white transition-all duration-300 dark:bg-teal-800 hover:dark:bg-teal-700 `} `}
             key={amount}
             onClick={() => {
               setChosenAmount(amount)

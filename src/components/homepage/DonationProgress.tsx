@@ -146,7 +146,7 @@ const DonationProgress = () => {
         <p className="m-0 p-0 font-handwriting text-2xl">collected</p>
         <button
           onClick={scrollToDonationForm}
-          className="rounded-3xl bg-cyan-400 px-8 py-4 font-handwriting text-2xl text-cyan-950 transition-all duration-300 hover:bg-cyan-300 dark:bg-cyan-800 dark:text-cyan-200 hover:dark:bg-cyan-700 lg:mt-4"
+          className="rounded-3xl mt-8 bg-cyan-400 px-8 py-4 font-handwriting text-2xl text-cyan-950 transition-all duration-300 hover:bg-cyan-300 dark:bg-cyan-800 dark:text-cyan-200 hover:dark:bg-cyan-700 lg:mt-4"
         >
           Offer your support
         </button>

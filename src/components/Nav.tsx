@@ -13,7 +13,6 @@ export const themeAtom = atom<'dark' | 'light'>('dark')
 
 /**
  * A navbar for the website. Right now it only handles the managing of the color theme
- * @returns 
  */
 function Nav() {
   const [theme, toggleTheme] = useAtom(themeAtom)

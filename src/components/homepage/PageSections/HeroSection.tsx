@@ -10,7 +10,7 @@ import { getDonationsMetadata, getDonors } from '@/lib/fetches/donations'
 import ListOfDonors from '../ListOfDonors'
 
 /**
- * This section should appear at the top on the homepage ("/")
+ * The section that should appear first at the top of the homepage 
  */
 export default async function HeroSection() {
   const donorsQueryClient = new QueryClient()
