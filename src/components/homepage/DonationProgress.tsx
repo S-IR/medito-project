@@ -41,6 +41,7 @@ const DonationProgress = () => {
   }, [])
 
   useEffect(() => {
+    console.log('donation metadata', donationMetadata);
     animationAPI.start({
       progress: donationMetadata.gathered / donationMetadata.target,
       opacity: 1,
@@ -87,10 +88,6 @@ const DonationProgress = () => {
         gathered: newGathered,
       }))
 
-      animationAPI.start({
-        progress: newGathered / donationMetadata.target,
-        opacity: 1,
-      })
     }
   }, [newDonorData, animationAPI])
 
