@@ -48,7 +48,7 @@ const DonationProgress = () => {
     console.log('donationMetadata.gathered', donationMetadata.gathered, "donationMetadata.target", donationMetadata.target, "equation", Math.max(1, donationMetadata.gathered) / donationMetadata.target);
 
     animationAPI.start({
-      progress: Math.max(1, donationMetadata.gathered) / donationMetadata.target,
+      progress: donationMetadata.gathered / donationMetadata.target,
       opacity: 1,
     })
   }, [donationMetadata])

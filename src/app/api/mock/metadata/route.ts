@@ -12,7 +12,7 @@ export const runtime = 'edge'
  */
 export async function GET(request: NextRequest) {
 
-    const gathered = 10000
+    const gathered = 15000
     const target = 20000
   return new Response(JSON.stringify({ gathered, target}))
 }
