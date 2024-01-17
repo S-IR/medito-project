@@ -10,7 +10,7 @@ import TierComponent from '../TierComponent'
  */
 const DonorRewards = () => {
   return (
-    <article className="py-6 rounded-3xl flex  w-full  flex-col items-center justify-center bg-gradient-to-r lg:rounded-[60px]align-middle">
+    <article className="py-6 rounded-3xl bg-gradient-to-r dark:from-neutral-950 dark:via-[#0C0D11] dark:to-[#0C0D11] flex  w-full  flex-col items-center justify-center lg:rounded-[60px]align-middle border-b-2 dark:border-neutral-900 border-cyan-100">
       <h5 className="max-w-[80vw] lg:max-w-[500px] mt-16 font-handwriting text-5xl text-cyan-900 dark:text-cyan-300 ">
         {hydrationData.title}
       </h5>

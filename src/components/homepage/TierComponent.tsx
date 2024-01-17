@@ -20,7 +20,7 @@ export default function TierComponent({ tier }: TierComponentProps) {
   }
 
   return (
-    <div className="flex h-[300px] w-[400px] flex-col rounded-3xl  bg-white dark:bg-neutral-950 dark:shadow-stone-950 p-4 shadow-md shadow-stone-400">
+    <div className="flex h-[300px] w-[400px] flex-col rounded-3xl  bg-white dark:bg-neutral-950 dark:shadow-stone-800 p-4 shadow-md shadow-stone-400">
       <p className="mt-6 w-full text-center font-handwriting text-6xl text-cyan-800 dark:text-cyan-400 ">{`${tier.value}$`}</p>
       <ul className=" mt-4 flex list-none flex-col">
         {tier.rewards.map((point) => (

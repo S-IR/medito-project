@@ -30,7 +30,7 @@ function QADropdowns() {
   return (
     <animated.article
       ref={ref}
-      className="flex w-full flex-col items-center justify-center rounded-3xl bg-cyan-100 py-[5vh] lg:py-[10vh] align-middle dark:bg-neutral-950 lg:rounded-[60px]"
+      className="flex w-full flex-col items-center justify-center rounded-3xl bg-cyan-100 py-[5vh] lg:py-[10vh] align-middle dark:bg-neutral-900 bg-gradient-to-r dark:from-[#0C0D11] dark:via-[#0C0D11] border-y-2 dark:border-neutral-900 border-cyan-100  dark:to-neutral-950 "
       style={fadeIn}
     >
       <Accordion
