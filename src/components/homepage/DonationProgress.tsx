@@ -18,7 +18,7 @@ import { donorData } from '@/constants/types/donation'
 const DonationProgress = () => {
   //I've set both to 1 to avoid any divide by 0 issues
   const [donationMetadata, setDonationMetadata] =
-    useState<donationsMetadataRes>({ gathered: 1, target: 1 })
+    useState<donationsMetadataRes>({ gathered: 0, target: 0 })
 
   //progress will be a value from 0 to value / max in the animation. Current value will just be a value from 0 to the actual number
   const [animationProps, animationAPI] = useSpring(() => ({
@@ -41,10 +41,8 @@ const DonationProgress = () => {
   }, [])
 
   useEffect(() => {
-    console.log('donation metadata', donationMetadata);
-    if (donationMetadata.target === 1) return
     animationAPI.start({
-      progress: donationMetadata.gathered / donationMetadata.target,
+      progress: Math.max(1, donationMetadata.gathered) / donationMetadata.target,
       opacity: 1,
     })
   }, [donationMetadata])
