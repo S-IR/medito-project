@@ -30,7 +30,6 @@ const DonationProgress = () => {
       progress : 0
     },
 
-    config: config.gentle,
   }))
 
   //at first fetch the full metadata
