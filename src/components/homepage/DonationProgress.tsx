@@ -48,6 +48,7 @@ const DonationProgress = () => {
     animationAPI.start({
       progress: donationMetadata.gathered / donationMetadata.target,
       opacity: 1,
+      delay: 200,
     })
   }, [donationMetadata])
 
