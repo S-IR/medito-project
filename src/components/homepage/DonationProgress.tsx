@@ -78,18 +78,7 @@ const DonationProgress = () => {
   // Calculate the circumference of the circle
   const circumference = 2 * Math.PI * (diameter / 2)
 
-  //starts the animation from 0 to the given value
-  useEffect(() => {
-    if (newDonorData && newDonorData.donation && newDonorData.donation.amount) {
-      const newGathered =
-        donationMetadata.gathered + newDonorData.donation.amount
-      setDonationMetadata((oldMetadata) => ({
-        ...oldMetadata,
-        gathered: newGathered,
-      }))
 
-    }
-  }, [newDonorData, animationAPI])
 
   const scrollToDonationForm = () => {
     const targetElement = document.getElementById('donation-form')
