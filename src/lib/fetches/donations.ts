@@ -42,7 +42,7 @@ export const getDonors = async () => {
 }
 
 //this sets the milliseconds needed before getNewDonor should run
-export const getNewDonorDelayMS = 10 * 1000
+export const getNewDonorDelayMS = 5 * 1000
 
 //this variable just makes sure that the request does not go through on the first call when the function is called (when a component renders for the first time)
 let isFistRun = true

@@ -43,11 +43,12 @@ const ListOfDonors = () => {
       className: 'dark:bg-neutral-950 dark:border-slate-800 ',
     })
 
+    const newDonationData = {...newDonorData.donation?.fromDonor!, amount : newDonorData.donation.amount}
     setDonors((donors) => {
       if (donors === undefined) {
-        return [newDonorData.donation?.fromDonor!]
+        return [newDonationData]
       } else {
-        return [newDonorData.donation?.fromDonor!, ...donors].slice(0, 4)
+        return [newDonationData, ...donors].slice(0, 4)
       }
     })
   }, [newDonorData])
