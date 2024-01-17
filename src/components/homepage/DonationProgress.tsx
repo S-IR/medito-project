@@ -75,7 +75,7 @@ const DonationProgress = () => {
   }, [newDonorData])
 
   // Define the diameter and stroke of the circle
-  const diameter = 250
+  const diameter = 300
   const strokeWidth = 3
 
   // Calculate the circumference of the circle
@@ -94,7 +94,7 @@ const DonationProgress = () => {
   return (
     <div className=" flex flex-col items-center justify-center ">
       <div className="relative">
-        <animated.p className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 font-handwriting text-5xl text-cyan-500 dark:text-cyan-300">
+        <animated.p className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 font-handwriting lg:text-6xl text-5xl text-cyan-500 dark:text-cyan-300">
           {animationProps.progress.to((p) => `${Math.round(p*100)}%`)}
         </animated.p>
         <svg
@@ -128,25 +128,25 @@ const DonationProgress = () => {
 
       <animated.div
         style={{ opacity: animationProps.opacity }}
-        className={'flex flex-col items-center'}
+        className={'flex flex-col lg:mt-6 items-center'}
       >
         <div className="mt-4 flex w-full items-center justify-center font-handwriting text-2xl ">
           <animated.p
             className={
-              'min-w-[100px] text-center text-cyan-500 dark:text-cyan-300'
+              'min-w-[100px] lg:text-2xl  text-center text-cyan-500 dark:text-cyan-300'
             }
           >
             {donationMetadata?.gathered}$
           </animated.p>
           <p className={'text-cyan-500 '}>/</p>
-          <p className="min-w-[100px] text-center">
+          <p className="min-w-[100px]  lg:text-2xl text-center">
             {donationMetadata?.target}$
           </p>
         </div>
         <p className="m-0 p-0 font-handwriting text-2xl">collected</p>
         <button
           onClick={scrollToDonationForm}
-          className="rounded-3xl mt-8 bg-cyan-400 px-8 py-4 font-handwriting text-2xl text-cyan-950 transition-all duration-300 hover:bg-cyan-300 dark:bg-cyan-800 dark:text-cyan-200 hover:dark:bg-cyan-700 lg:mt-4"
+          className="rounded-3xl mt-8 bg-cyan-400 px-8 py-4 font-handwriting text-2xl text-cyan-950 transition-all duration-300 hover:bg-cyan-300 dark:bg-cyan-800 dark:text-cyan-200 hover:dark:bg-cyan-700 lg:mt-12 lg:px-14 lg:py-6 lg:text-3xl "
         >
           Offer your support
         </button>
