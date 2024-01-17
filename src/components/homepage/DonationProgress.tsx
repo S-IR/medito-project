@@ -41,7 +41,7 @@ const DonationProgress = () => {
   }, [])
 
   useEffect(() => {
-    console.log('donation metadata', donationMetadata);
+    if (donationMetadata.target === 1) return
     animationAPI.start({
       progress: donationMetadata.gathered / donationMetadata.target,
       opacity: 1,
