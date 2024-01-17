@@ -41,6 +41,9 @@ const DonationProgress = () => {
   }, [])
 
   useEffect(() => {
+    console.log('donation metadata', donationMetadata);
+    console.log('donationMetadata.gathered', donationMetadata.gathered, "donationMetadata.target", donationMetadata.target, "equation", Math.max(1, donationMetadata.gathered) / donationMetadata.target);
+
     animationAPI.start({
       progress: Math.max(1, donationMetadata.gathered) / donationMetadata.target,
       opacity: 1,
