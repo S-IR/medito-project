@@ -1,6 +1,7 @@
 'use client'
 import {
   possibleCurrencies,
+  possibleCurrency,
   possibleIntervals,
 } from '@/constants/types/donation'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -12,6 +13,7 @@ import { loadStripe } from '@stripe/stripe-js'
 import getStripe from '@/lib/utils/get-stripe'
 import Stripe from 'stripe'
 import { useTransition, animated, useSpring, useInView } from 'react-spring'
+import { Select, SelectContent, SelectItem, SelectTrigger } from '../ui/select'
 
 const possibleDurations = [
   {
@@ -65,6 +67,7 @@ export default function DonationForm() {
   const [chosenAmount, setChosenAmount] =
     useState<(typeof possibleAmounts)[number]>(amountSetByPage)
 
+  const [isStripeLoading, setIsStripeLoading] = useState(false)
   const onSubmit = async (data: formSubmit) => {
     const STRIPE_PK = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
     const stripe = await loadStripe(STRIPE_PK)
@@ -91,18 +94,16 @@ export default function DonationForm() {
       )
     )
       return
+
     setChosenAmount(amountSetByPage)
     if (amountSetByPage === 'custom') return
     setFormValue('amount', amountSetByPage)
   }, [amountSetByPage])
 
   const currentInterval = watch('interval')
+  const currentCurrency = watch('currency')
 
-  const customInputStyle = useSpring({
-    from: { opacity: 0 },
-    to: { opacity: chosenAmount === 'custom' ? 1 : 0 },
-  })
-
+  useTransition
 
   return (
     <form
@@ -117,7 +118,7 @@ export default function DonationForm() {
         {possibleDurations.map((duration) => (
           <button
             type="button"
-            className={`lg:text-smp  w-full rounded-md px-4 py-1 text-xs text-teal-900 shadow-md shadow-stone-400  hover:text-black dark:text-teal-200 dark:shadow-stone-950 lg:px-10 lg:py-2 ${currentInterval === duration.value ? `bg-cyan-200 dark:bg-cyan-800 hover:dark:bg-cyan-700` : `bg-white transition-all duration-300 dark:bg-teal-800 hover:dark:bg-teal-700 `} `}
+            className={`lg:text-smp lg:text-base w-full rounded-md px-4 py-1 text-xs text-teal-900 shadow-md shadow-stone-400  hover:text-black dark:text-teal-200 dark:shadow-stone-950 lg:px-10 ${currentInterval === duration.value ? `bg-cyan-200 dark:bg-cyan-800 hover:dark:bg-cyan-700` : `bg-white transition-all duration-300 dark:bg-teal-800 hover:dark:bg-teal-700 `} `}
             key={duration.value}
             onClick={() => setFormValue('interval', duration.value)}
           >
@@ -129,7 +130,7 @@ export default function DonationForm() {
         {possibleAmounts.map((amount) => (
           <button
             type="button"
-            className={`lg:text-smp w-full rounded-md px-2 py-1 text-xs text-teal-900 shadow-md shadow-stone-400 hover:text-black  dark:text-teal-200 dark:shadow-stone-950  lg:px-6 lg:py-2 ${chosenAmount === amount ? `bg-cyan-200 dark:bg-cyan-800 hover:dark:bg-cyan-700` : `bg-white transition-all duration-300 dark:bg-teal-800 hover:dark:bg-teal-700 `} `}
+            className={`lg:text-smp lg:text-base w-full rounded-md px-2 py-1 text-xs text-teal-900 shadow-md shadow-stone-400 hover:text-black  dark:text-teal-200 dark:shadow-stone-950  lg:px-6 ${chosenAmount === amount ? `bg-cyan-200 dark:bg-cyan-800 hover:dark:bg-cyan-700` : `bg-white transition-all duration-300 dark:bg-teal-800 hover:dark:bg-teal-700 `} `}
             key={amount}
             onClick={() => {
               setChosenAmount(amount)
@@ -145,25 +146,33 @@ export default function DonationForm() {
         ))}
       </div>
       <div className={`min-h-[70px] w-full `}>
-        <animated.div
-          style={customInputStyle}
-          className="relative mt-4 w-full "
-        >
+        <div className="relative mt-4 w-full ">
           {chosenAmount === 'custom' && (
             <>
               <div className="flex h-8 max-w-[200px] rounded-md shadow-md shadow-stone-400 dark:shadow-stone-950 ">
-                <select
-                  {...register('currency')}
-                  className="h-full w-12 rounded-l-md bg-cyan-100 text-xs text-cyan-500 dark:bg-neutral-900 dark:text-cyan-700 "
+                <Select
+                  onValueChange={(e) =>
+                    setFormValue('currency', e as possibleCurrency)
+                  }
                 >
-                  {possibleCurrencies.map((currency) => (
-                    <option key={currency} value={currency}>
-                      {currency}
-                    </option>
-                  ))}
-                </select>
+                  <SelectTrigger className="h-full w-12 rounded-l-md bg-cyan-100 text-xs text-cyan-500 dark:bg-neutral-900 dark:text-cyan-700 ">
+                    {currentCurrency}
+                  </SelectTrigger>
+                  <SelectContent className="dark:bg-teal-950">
+                    {possibleCurrencies.map((currency) => (
+                      <SelectItem
+                        className="hover:dark:bg-cyan-600"
+                        key={currency}
+                        value={currency}
+                      >
+                        {currency}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
                 <input
-                  min={0}
+                  min={1}
                   type="number"
                   {...register('amount', { valueAsNumber: true })}
                   className="h-full w-full rounded-r-md pl-2 dark:bg-teal-800 dark:text-cyan-300"
@@ -174,7 +183,7 @@ export default function DonationForm() {
               </p>
             </>
           )}
-        </animated.div>
+        </div>
       </div>
 
       {/* This is some filler space for any legal related text if needed. you can always remove it */}
@@ -184,7 +193,8 @@ export default function DonationForm() {
       </p>
       <button
         type="submit"
-        className="mx-auto mt-4 rounded-3xl bg-cyan-500 px-12 py-2 font-handwriting text-2xl text-cyan-900 transition-all duration-300 hover:bg-cyan-400 dark:bg-cyan-800 dark:text-cyan-200 hover:dark:bg-cyan-700"
+        disabled={isStripeLoading}
+        className="mx-auto disabled:bg-gray-800 mt-4 rounded-3xl bg-cyan-500 px-12 py-2 font-handwriting text-2xl text-cyan-900 transition-all duration-300 hover:bg-cyan-400 dark:bg-cyan-800 dark:text-cyan-200 hover:dark:bg-cyan-700"
       >
         Donate
       </button>
